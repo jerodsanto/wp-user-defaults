@@ -18,7 +18,8 @@ Installation
 If your server has git installed, simply execute:
 
 `cd [wordpress directory]/wp-content/plugins/`  
-`git clone git://github.com/sant0sk1/dotfiles.git`
+
+`git clone git://github.com/sant0sk1/wp-user-defaults.git`
 
 And activate the plugin from your WordPress admin panel.
 
