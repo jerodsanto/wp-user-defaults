@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WP User Defaults
-Plugin URI: http://jerodsanto.net/src/wp-user-defaults
+Plugin URI: http://github.com/sant0sk1/wp-user-defaults/tree/master
 Description: Allows Administrator to set default values for new user profiles
 Author: Jerod Santo
 Author URI: http://jerodsanto.net
