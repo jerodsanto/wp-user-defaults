@@ -62,12 +62,12 @@ function apply_user_defaults($user_id) {
   }
 }
 
-function add_pages() {
-  add_options_page('Default User Settings','Default User Settings',10,__FILE__,'the_options_page');
+function wp_user_defaults_menu() {
+  add_options_page('Default User Settings','Default User Settings',10,__FILE__,'wp_user_defaults_options');
 }
 
 // draw the actual options page loaded above
-function the_options_page() {
+function wp_user_defaults_options() {
   $rich_editing = (bool) get_option('user_defaults_rich_editing');
   $admin_color  = get_option('user_defaults_admin_color');
   $shortcuts    = (bool) get_option('user_defaults_comments_shortcuts');
@@ -132,7 +132,7 @@ add_option('user_defaults_rich_editing','1');
 add_option('user_defaults_admin_color', "fresh");
 add_option('user_defaults_comments_shortcuts',false);
 add_option('user_defaults_display_name','first_last'); // first_last, last_first, first, last, nick
-add_action('admin_menu','add_pages');
+add_action('admin_menu','wp_user_defaults_menu');
 add_action('user_register','apply_user_defaults');
 
 ?>
