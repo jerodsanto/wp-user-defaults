@@ -1,4 +1,4 @@
-=== wp-user-defaults ===
+=== WP User Defaults ===
 Contributors: sant0sk1
 Donate link: http://jerodsanto.net
 Tags: default, user, defaults, users
