@@ -5,7 +5,7 @@ Plugin URI: http://github.com/sant0sk1/wp-user-defaults/tree/master
 Description: Allows Administrator to set default values for new user profiles
 Author: Jerod Santo
 Author URI: http://jerodsanto.net
-Version: 0.1
+Version: 1.1
 */
 
 // disallow direct access to the plugin file
@@ -15,13 +15,13 @@ die("Sorry, but you can't access this page directly.");
 
 // called when new user is registered
 function apply_user_defaults($user_id) {
-  
+
   // fetch current user meta information
   $first   = get_usermeta($user_id,'first_name');
   $last    = get_usermeta($user_id, 'last_name');
   $nick    = get_usermeta($user_id, 'nickname');
   $display = "";
-  
+
   // set the default display name
   $display_type = get_option('user_defaults_display_name');
   switch ($display_type) {
@@ -42,23 +42,23 @@ function apply_user_defaults($user_id) {
       break;
   }
   wp_update_user(array("ID" => $user_id, "display_name" => $display));
-  
+
   // set the administrative interface color
   $admin_color = get_option('user_defaults_admin_color');
   wp_update_user(array("ID" => $user_id, "admin_color" => $admin_color ));
-  
+
   // set the rich editor default (true = disabled)
   if ((bool) get_option('user_defaults_rich_editing')) {
     update_usermeta($user_id, 'rich_editing','false');
   } else {
     update_usermeta($user_id, 'rich_editing','true');
   }
-  
-  // set the keyboard shortcuts 
+
+  // set the keyboard shortcuts
   if ((bool) get_option('user_defaults_comments_shortcuts')) {
     update_usermeta($user_id, 'comment_shortcuts','true');
   } else {
-   update_usermeta($user_id, 'comment_shortcuts','false'); 
+   update_usermeta($user_id, 'comment_shortcuts','false');
   }
 }
 
@@ -78,11 +78,11 @@ function wp_user_defaults_options() {
   <h2>Default User Settings</h2>
   <h3>Applies to newly registered users, not existing users.</h3>
   <form method="post" action="options.php">
-  
+
     <input type="hidden" name="action" value="update" />
     <input type="hidden" name="page_options" value="user_defaults_rich_editing,user_defaults_admin_color,user_defaults_comments_shortcuts,user_defaults_display_name" />
     <?php wp_nonce_field('update-options'); ?>
-    
+
     <table class="form-table">
       <tr valign="top">
         <th scope="row"><?php _e('Visual Editor')?></th>
@@ -116,15 +116,19 @@ function wp_user_defaults_options() {
         </td>
       </tr>
     </table>
-    
+
     <p class="submit">
       <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
     </p>
   </form>
 </div>
-    
-  
+
+
 <?php
+}
+
+function wp_user_defaults_add_pages() {
+  add_submenu_page('users.php','Default Settings','Default Settings','administrator','wp-user-defaults','wp_user_defaults_menu');
 }
 
 // hooks into wordpress api
@@ -132,7 +136,7 @@ add_option('user_defaults_rich_editing','1');
 add_option('user_defaults_admin_color', "fresh");
 add_option('user_defaults_comments_shortcuts',false);
 add_option('user_defaults_display_name','first_last'); // first_last, last_first, first, last, nick
-add_action('admin_menu','wp_user_defaults_menu');
+add_action('admin_menu','wp_user_defaults_add_pages');
 add_action('user_register','apply_user_defaults');
 
 ?>
